@@ -25,7 +25,7 @@ fn main() -> CmdResult {
         for ip in &ip_vec {
             if run_cmd! {
             echo "check ip:$ip start.";
-            ping $ip -c 3;
+            // ping $ip -c 3;
             curl -H "Host:github.com" --connect-timeout 3 r"https://"$ip -k -I | grep "HTTP/2 200";
             echo "check ip:$ip end.";
         }.is_err() {
@@ -39,5 +39,9 @@ fn main() -> CmdResult {
         }
     }
     println!("{} ip hosts:{:?}", ip_success.len(), ip_success);
+    let len = ip_success.len();
+    for n in 0..len {
+        println!("{} github.com", ip_success[n]);
+    }
     Ok(())
 }
